@@ -68,6 +68,10 @@ Citizen.CreateThread(function()
             if IsControlJustPressed(1, 38) then
                 ESX.TriggerServerCallback('moneycheckdiving', function(money)
                     if money then
+			ESX.TriggerServerCallback('isalreadysomeoneflying', function(alreadyflying)
+                            if alreadyflying then
+                                exports['mythic_notify']:DoHudText('error', "Someone already SkiDiving! Please wait.")
+                            elseif alreadyflying == false then
                         GiveWeaponToPed(PlayerPedId(), GetHashKey("GADGET_PARACHUTE"), true)
                         DoScreenFadeOut(4000)
                         Citizen.Wait(4000)
@@ -83,20 +87,22 @@ Citizen.CreateThread(function()
                             Citizen.Wait(10000)
                             ESX.Game.DeleteVehicle(vehicle)
                             DeletePed(driver)
+			TriggerServerEvent("flyinghasended")
                         end)
                         Citizen.Wait(4000)
                         DoScreenFadeIn(4000)
                     else
                         exports['mythic_notify']:DoHudText('error', Config.NoMoney)
-                    end
+                     end
                 end)
-            end
         else
             Citizen.Wait(100)
         end
-
+    end)
+            end
+        end
     end
-
+end
 end)
 
 Citizen.CreateThread(function()
