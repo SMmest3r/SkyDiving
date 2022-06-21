@@ -1,6 +1,4 @@
-ESX = nil
-
-TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
+local alreadyflying = false
 
 ESX.RegisterServerCallback('moneycheckdiving', function(source, cb)
 	local xPlayer = ESX.GetPlayerFromId(source)
@@ -11,4 +9,21 @@ ESX.RegisterServerCallback('moneycheckdiving', function(source, cb)
 	else
 		cb(false)
 	end
+end)
+
+ESX.RegisterServerCallback('isalreadysomeoneflying', function(source, cb)
+	local xPlayer = ESX.GetPlayerFromId(source)
+
+	if alreadyflying then
+		cb(alreadyflying)
+	else
+		cb(alreadyflying)
+		Citizen.Wait(300)
+		alreadyflying = true
+	end
+end)
+
+RegisterServerEvent("flyinghasended")
+AddEventHandler("flyinghasended", function()
+	alreadyflying = false
 end)
