@@ -68,6 +68,10 @@ Citizen.CreateThread(function()
             if IsControlJustPressed(1, 38) then
                 ESX.TriggerServerCallback('moneycheckdiving', function(money)
                     if money then
+			ESX.TriggerServerCallback('isalreadysomeoneflying', function(alreadyflying)
+                            if alreadyflying then
+                                exports['mythic_notify']:DoHudText('error', "Someone already skydDiving! Please wait.)
+                            elseif alreadyflying == false then
                         GiveWeaponToPed(PlayerPedId(), GetHashKey("GADGET_PARACHUTE"), true)
                         DoScreenFadeOut(4000)
                         Citizen.Wait(4000)
